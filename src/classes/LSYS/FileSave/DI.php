@@ -1,7 +1,7 @@
 <?php
 namespace LSYS\FileSave;
 /**
- * @method \LSYS\FileSave filesave($config=null)
+ * @method \LSYS\FileSave fileSave($config=null)
  */
 class DI extends \LSYS\DI{
     public static $config = 'filesave.local_disk';
@@ -10,7 +10,7 @@ class DI extends \LSYS\DI{
      */
     public static function get(){
         $di=parent::get();
-        !isset($di->filesave)&&$di->filesave(new \LSYS\DI\ShareCallback(function($config=null){
+        !isset($di->fileSave)&&$di->fileSave(new \LSYS\DI\ShareCallback(function($config=null){
             return $config?$config:self::$config;
         },function($config=null){
             $config=\LSYS\Config\DI::get()->config($config?$config:self::$config);

@@ -11,7 +11,7 @@ class LocalDisk implements FileSave{
         $this->_config=$config;
 	}
 	public function put($filepath,$filename=null,$clear=true){
-	    $this->_check_dir($this->_config->exist("safe_dir",[]),$filepath);
+	    $this->_checkDir($this->_config->exist("safe_dir",[]),$filepath);
 	    if (!is_file($filepath))return null;
 	    $savedir=rtrim($this->_config->get("dir"),'\\/')."/";
 	    $sdir=$this->_config->get("space","")."/";
@@ -22,7 +22,7 @@ class LocalDisk implements FileSave{
 	        $ext=pathinfo($filename, PATHINFO_EXTENSION);
 	    }
 	    $_filename=uniqid().".".$ext;
-	    $this->_make_dir($savedir.$sdir.$fdir);
+	    $this->_makeDir($savedir.$sdir.$fdir);
 	    $_filepath=$savedir.$sdir.$fdir.$_filename;
 	    if ($clear)$status=@rename($filepath,$_filepath);
 	    else $status=@copy($filepath,$_filepath);
@@ -33,7 +33,7 @@ class LocalDisk implements FileSave{
 	    if (empty($filename))return null;
 	    $savedir=rtrim($this->_config->get("dir"),'\\/')."/";
 	    $filepath=$savedir.$filename;
-	    $this->_check_dir($this->_config->exist("safe_dir",[]),$filepath);
+	    $this->_checkDir($this->_config->exist("safe_dir",[]),$filepath);
 	    if (!is_file($filepath))return true;
 	    return @unlink($filepath);
 	}
@@ -42,7 +42,7 @@ class LocalDisk implements FileSave{
 	 * @param string $path
 	 * @throws Exception
 	 */
-	protected function _make_dir($dir){
+	protected function _makeDir($dir){
 	    $is_linux=false;
 	    $dir=rtrim($dir,"\\/")."/";
 	    if(substr($dir, 0,1)=='/')$is_linux=true;

@@ -2,7 +2,7 @@
 namespace LSYS\FileSave;
 use LSYS\Exception;
 trait Utils{
-    protected function _check_dir($safe_dir,&$filepath){
+    protected function _checkDir($safe_dir,&$filepath){
         if (empty($safe_dir))return;
         $filepath=realpath($filepath);
         if(!$filepath)return ;
