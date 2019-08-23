@@ -26,7 +26,7 @@ class LocalDisk implements FileSave{
 	    $_filepath=$savedir.$sdir.$fdir.$_filename;
 	    if ($clear)$status=@rename($filepath,$_filepath);
 	    else $status=@copy($filepath,$_filepath);
-	    if(!$status)throw new Exception(__(":type file to :dir is fail",array("type"=>$clear?"move":"copy","dir"=>$_filepath)));
+	    if(!$status)throw new Exception(__(":type file to :dir is fail",array(":type"=>$clear?"move":"copy",":dir"=>$_filepath)));
 	    return $sdir.$fdir.$_filename;
 	}
 	public function remove($filename){
@@ -68,7 +68,7 @@ class LocalDisk implements FileSave{
 	        
 	        if(is_dir($t_dir))continue;
 	        if(!@mkdir($t_dir,0777)){
-	            throw new Exception(__("can't create directory :dir",array("dir"=>$t_dir)));
+	            throw new Exception(__("can't create directory :dir",array(":dir"=>$t_dir)));
 	        }
 	        @chmod($t_dir, 0777);
 	    }

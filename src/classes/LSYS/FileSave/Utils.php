@@ -14,6 +14,6 @@ trait Utils{
                 break;
             }
         }
-        if(!$safe)throw new Exception(__("file can't access[:path]",array("path"=>$filepath)));
+        if(!$safe)throw new Exception(__("file can't access[:path]",array(":path"=>$filepath)));
     }
 }
