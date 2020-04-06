@@ -17,14 +17,14 @@
 		]
 	},
 	"require" : {
-		"lsys/config" : "~2.0.0"
+		"lsys/config" : "~0.0.0"
 	},
 	"require-dev" : {
-		"lsys/file-get" : "~2.0.0"
+		"lsys/file-get" : "~0.0.0"
 	},
 	"suggest" : {
 		"aliyuncs/oss-sdk-php" : "v2.3.0",
-		"lsys/fastdfs" : "~2.0.0",
-		"lsys/mongodb" : "~2.0.0"
+		"lsys/fastdfs" : "~0.0.0",
+		"lsys/mongodb" : "~0.0.0"
 	}
 }
