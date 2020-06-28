@@ -17,7 +17,7 @@ class FastDFS implements FileSave{
 	public function __construct(Config $config){
 	    $this->_config=$config;
 	}
-	public function put($filepath,$filename=null,$clear=true){
+	public function put(?string $filepath,?string $filename=null,bool $clear=true){
 	    $this->_checkDir($this->_config->exist("safe_dir",[]),$filepath);
 	    if (!is_file($filepath))return null;
 	    $space=$this->_config->get("space","group");
@@ -57,12 +57,12 @@ class FastDFS implements FileSave{
 	    if ($p===false)return array($this->_config->get("space","group"),$file);
 	    else return array(substr($file, 0,$p),substr($file, $p+1));
 	}
-	public function remove($filename){
+	public function remove(?string $filename):bool{
 	    if (empty($filename))return true;
 	    list($space,$filename)=$this->_split($filename);
 	    $fastdfs=\LSYS\FastDFS\DI::get()->fastdfs();
 	    $this->_server=$fastdfs->connect_server_from_tracker();
-	    return $fastdfs->storage_delete_file($space,$filename);
+	    return (bool)$fastdfs->storage_delete_file($space,$filename);
 	}
 	public function __destruct(){
 	    $this->_server&&\LSYS\FastDFS\DI::get()->fastdfs()->disconnect_server($this->_server);

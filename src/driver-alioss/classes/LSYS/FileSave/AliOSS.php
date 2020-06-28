@@ -28,7 +28,7 @@ class AliOSS implements FileSave{
         }
         $this->_oss=$ossClient;
     }
-    public function put($filepath,$filename=null,$clear=true){
+    public function put(?string $filepath,?string $filename=null,bool $clear=true){
         $this->_checkDir($this->_config->exist("safe_dir",[]),$filepath);
         if (!is_file($filepath))return null;
         $space=$this->_config->get("space","__");
@@ -48,7 +48,7 @@ class AliOSS implements FileSave{
         if ($clear)unlink($filepath);
         return $_filename;
     }
-    public function remove($filename){
+    public function remove(?string $filename):bool{
         if (empty($filename))return true;
         $this->_oss->deleteObject($this->_bucket,$filename);
         return !$this->_oss->doesObjectExist($this->_bucket, $filename);

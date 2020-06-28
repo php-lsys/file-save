@@ -10,7 +10,7 @@ class LocalDisk implements FileSave{
     public function __construct(Config $config){
         $this->_config=$config;
 	}
-	public function put($filepath,$filename=null,$clear=true){
+	public function put(?string $filepath,?string $filename=null,bool $clear=true){
 	    $this->_checkDir($this->_config->exist("safe_dir",[]),$filepath);
 	    if (!is_file($filepath))return null;
 	    $savedir=rtrim($this->_config->get("dir"),'\\/')."/";
@@ -29,20 +29,20 @@ class LocalDisk implements FileSave{
 	    if(!$status)throw new Exception(__(":type file to :dir is fail",array(":type"=>$clear?"move":"copy",":dir"=>$_filepath)));
 	    return $sdir.$fdir.$_filename;
 	}
-	public function remove($filename){
+	public function remove(?string $filename):bool{
 	    if (empty($filename))return null;
 	    $savedir=rtrim($this->_config->get("dir"),'\\/')."/";
 	    $filepath=$savedir.$filename;
 	    $this->_checkDir($this->_config->exist("safe_dir",[]),$filepath);
 	    if (!is_file($filepath))return true;
-	    return @unlink($filepath);
+	    return !!@unlink($filepath);
 	}
 	/**
 	 * 创建目录
 	 * @param string $path
 	 * @throws Exception
 	 */
-	protected function _makeDir($dir){
+	protected function _makeDir(?string $dir){
 	    $is_linux=false;
 	    $dir=rtrim($dir,"\\/")."/";
 	    if(substr($dir, 0,1)=='/')$is_linux=true;

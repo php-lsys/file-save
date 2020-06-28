@@ -23,7 +23,7 @@ class GridFS implements FileSave{
 	    }else $db=$monggodb->selectDatabase($this->_space);
 	    $this->_gridfs = $db->selectGridFSBucket();
 	}
-	public function put($filepath,$filename=null,$clear=true){
+	public function put(?string $filepath,?string $filename=null,bool $clear=true){
 	    $this->_checkDir($this->_config->exist("safe_dir",[]),$filepath);
 	    if (!is_file($filepath))return null;
 	    $attr=array();
@@ -36,12 +36,12 @@ class GridFS implements FileSave{
 	    if ($clear)@unlink($filepath);
 	    return $this->_space."/".strval($id);
 	}
-	public function remove($filename){
+	public function remove(?string $filename):bool{
 	    if (empty($filename))return true;
 	    list($space,$filename)=$this->_split($filename);
 	    if ($this->_space!=$space)return false;
 	    $id=new \MongoDB\BSON\ObjectID($filename);
-	    return $this->_gridfs->delete($id);
+	    return (bool)$this->_gridfs->delete($id);
 	}
 	protected function _split($file){
 	    $p=strpos($file,"/");
